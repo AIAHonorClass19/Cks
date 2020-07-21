@@ -1,0 +1,95 @@
+/******************************************************************************************
+  安保：来人check功能
+  需要调用一个函数，做到“来人”，画一个人出来，返回rand%2,即0或1，0为陌生人，1为主人
+  int painthuman(void);
+  当来人以后，check，若为0，手机界面显示有人闯入，危险符号
+                      若为1，气泡输出“主人，欢迎回家”
+  if-else
+  当正门打开，机器人跑到正门去，识别是否有主人：有，问好；没有，警告并通过手机告知主人
+*******************************************************************************************/
+#include"main.h"
+#include<stdio.h>
+#include "nmouse.h"
+#include "move.h"
+#include"svgahead.h"
+#include"basicgf.h"
+#include"compo.h"
+#include<conio.h>
+#include"advance.h"
+#include"frame.h"
+#include"hzxs.h"
+#include"module_b.h"
+#include<string.h>
+#include<bios.h>
+#include"input.h"
+#include"color1.h"
+#include"roomgf.h"
+#include"sign.h"
+#include"filefun.h"
+#include"room.h"
+#include"ground.h"
+#include"brick.h"
+#include"wall.h"
+#include"outside.h"
+#include"iphone.h"
+#include"iphCheck.h"
+#include"idCheck.h"
+#include"select.h"
+#include"service.h"
+#include"manage.h"
+#include"time.h"
+#include"control.h"
+#include"chat.h"
+#include"chatHanz.h"
+#include"chatInpu.h"
+#include"chatQhwh.h"
+#include"chatShow.h"
+#include"gkmove.h"
+#include"myhouse.h"
+#include"chatGame.h"
+#include"iphCmfrt.h"
+#include"mysystem.h"
+
+void guard(void);
+{
+    get_image();    //存要被覆盖的地方
+    srand(time(NULL));
+    signal = paint_human;//调用画人的函数，返回rand%2
+    if(signal)          //是主人
+    {
+        /**********这部分也许不用
+        save_image(ORIGINX, ORIGINY, FINALX, FINALY);  //保存正在做的事情
+        //转向门
+        //转回
+        printf_image(ORIGINX, ORIGINY, FINALX, FINALY);
+        ***********/
+        get_image();    //腾出气泡空间
+        bar();           //画气泡
+        fdhz(,,"主人，欢迎回家",);
+        put_image();    //复原
+    }
+    else
+    {
+        //调用画眼睛的语句，眼睛变红
+        get_image();    //记住手机界面目前的状态
+        fdhz(,,"发现入侵者",);
+        /************
+        fdhz(,,"报警",);
+        fdhz(,,"忽略",);
+        iphguard_click();   //等待按键
+        *************/
+        put_image();
+    }
+    put_image();        //put被人遮挡的部分
+}
+
+
+
+
+
+
+
+
+
+
+
