@@ -1,0 +1,154 @@
+#include<stdio.h>
+#include "nmouse.h"
+#include "move.h"
+#include"svgahead.h"
+#include"basicgf.h"
+#include"compo.h"
+#include<conio.h>
+#include"advance.h"
+#include"frame.h"
+#include"hzxs.h"
+#include"module_b.h"
+#include<string.h>
+#include<bios.h>
+#include"input.h"
+#include"color1.h"
+#include"roomgf.h"
+#include"sign.h"
+#include"filefun.h"
+#include"room.h"
+#include"ground.h"
+#include"brick.h"
+#include"wall.h"
+#include"outside.h"
+#include"iphone.h"
+#include"iphCheck.h"
+#include"idCheck.h"
+#include"select.h"
+#include"service.h"
+#include"manage.h"
+#include"time.h"
+#include"control.h"
+#include"chat.h"
+#include"chatHanz.h"
+#include"chatInpu.h"
+#include"chatQhwh.h"
+#include"chatShow.h"
+#include"gkmove.h"
+#include"myhouse.h"
+#include"chatGame.h"
+#include"iphCmfrt.h"
+#include"mysystem.h"
+#include"main.h"
+/***********************************************
+当主人温度升到37.5度时，端一杯水，打开药箱（身上），询问是否拨打120
+入睡以后，手机上监视主人的体温、血压等，手机界面上的东西还不清楚具体实现
+
+主人升温：for循环缓慢增加
+if(主人温度 >= 37.5) 先去厨房端水，再去主人卧室，打开药箱，
+                      询问是否不舒服，是否需要拨打120
+***********************************************/
+
+void treatment()
+{
+    float temperature;                                                   //初始体温随机，36.1~36.5度
+    char *temstr;
+    fdhz(,,,"温度",);                                                     //可能有微调
+
+
+
+    get_image();                                                         //存界面背景，等下覆盖掉显示完的温度
+    for(temperature=(rand()%5+361)/10; temperature<37.5;temperature=temperature+0.01)   //设定他一定会发烧，不给选择了
+    {
+        /*******************************
+        这部分可以参考学长关于空调变化的函数，手机界面未知，还不能写。学长代码在在iphcmfrt.c中。
+        //画图显示
+        bar(ORIGINX+198+13,ORIGINY+122+delta_y*delta_num,ORIGINX+244-13,ORIGINY+144+delta_y*delta_num,65535);
+        itoa(CheckHouse(func_num),set_temperature,10);
+        set_temperature[2] = '\0';
+        outtextxy(ORIGINX+198+10,ORIGINY+125+delta_y*delta_num,set_temperature,1,1,8,0);
+        **********************************/
+
+        temstr=ecvt(temperature,4,2,0);                                 //可能会有bug，不懂有没有终止符
+
+        //清空之前的文本，bar或者初始化界面
+        outtextxy(,,,tempstr,,);
+        put_image();
+        /****delay0(1);    先看看效果，再决定要不要delay    ******/
+    }
+
+    put_image();
+
+
+                                                        //对应for之前的get_image
+    //移动到厨房，，问题是不清楚是哪个函数
+    //跑到卧室
+    /****************************************************************************
+    这里开始调用画边拿水边走的函数了，想把学长边拿椅子边走的代码改掉，椅子改成水
+    *****************************************************************************/
+
+    //画打开药箱的动作，不难
+    get_image();    //腾出气泡空间
+    //画气泡
+    /********************************************学长的气泡代码
+    //聊天气泡                            //想写一个气泡函数，chat_bubble(char *sentence, int position_x, int position_y)
+                                          //第一个参数是想说的话，函数里面去动态分配一个空间。在指定位置出现，存在3秒钟
+	FillCircle(ORIGINX+178, ORIGINY+529, 4, 65535);
+	FillCircle(ORIGINX+183, ORIGINY+514, 7, 65535);
+	bar_round_2(ORIGINX+180,ORIGINY+486,ORIGINX+238,ORIGINY+516,10,1,65535);
+	bar(ORIGINX+195,ORIGINY+496,ORIGINX+225,ORIGINY+497,36410);	//138 198 210
+	bar(ORIGINX+195,ORIGINY+502,ORIGINX+225,ORIGINY+503,36410);	//138 198 210
+	bar(ORIGINX+195,ORIGINY+508,ORIGINX+225,ORIGINY+509,36410);	//138 198 210
+	**********************************************/
+    fdhz(,,"主人",); //似乎得分句，一句话里可能不行
+    outtextxy(,,,",",);
+    fdhz(,,"您好像发烧了",);
+    outtextxy(,,,",",);
+    fdhz(,,"需要拨打120吗",);
+    outtextxy(,,,"?",);
+
+    put_image();    //复原
+
+
+
+
+    /***************
+    二维数组把可能的按键存起来，专门写一个treatment_click的函数
+    readxy();
+    response=treatment_click();
+    **************/
+    if(要)               //鼠标交互，点击“要”的区域
+    {
+        get_image();    //腾出气泡空间
+        bar();           //画气泡
+        fdhz(,,"正在呼叫",);
+        put_image();    //复原
+        //想要渐变退出
+    }
+    else if(不要)
+    {
+        //药箱放到床头，需要一个专门的函数，和打开药箱的动作放在同一个文件
+        charge_move_forward(ROBOT_CASE *robot_position, int *x, int *y);//回到充电柱，学长的代码可用
+    }
+}
+
+int treatment_click(int *position_x, int *position_y, int *button);     //第三个参数表示状态
+{
+    /*********
+	按钮位置标准化
+	将所有可能的按钮位置坐标储存在二维数组中
+	*********/
+	int a[][];
+
+
+
+
+
+
+
+
+}
+
+
+
+
